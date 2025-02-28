@@ -19,12 +19,13 @@ import com.example.thousandsseparator.ui.theme.ThousandsSeparatorTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         setContent {
-            enableEdgeToEdge()
             ThousandsSeparatorTheme {
                 var selectedValue by remember { mutableStateOf(getThousandsValues().first()) }
+                val valuesCollection by remember { mutableStateOf(getThousandsValues()) }
 
                 Scaffold { innerPadding ->
                     Column(
@@ -33,9 +34,9 @@ class MainActivity : ComponentActivity() {
                         ThousandsSeparator(
                             "Thousands separator",
                             selectedItem = selectedValue,
-                            values = getThousandsValues(),
-                        ) {
-                            selectedValue = it
+                            values = valuesCollection,
+                        ) { selected ->
+                            selectedValue = selected
                         }
                     }
                 }
